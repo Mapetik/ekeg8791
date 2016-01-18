@@ -1,0 +1,9 @@
+
+    Options +FollowSymLinks -Indexes
+    RewriteEngine on
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)$ index.php/$1 [L]

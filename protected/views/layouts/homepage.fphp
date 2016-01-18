@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Corporate Blue Theme - Free Website Template</title>
+<meta name="keywords" content="corporate blue, theme, free templates, website templates, CSS, HTML" />
+<meta name="description" content="Corporate Blue Theme is a free website template provided by tooplate.com" />
+<link href="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/tooplate_style.css" rel="stylesheet" type="text/css" />
+
+<script language="javascript" type="text/javascript">
+function clearText(field)
+{
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+}
+</script>
+<!--   Free Website Template by t o o p l a t e . c o m   -->
+</head>
+<body> 
+
+<div id="tooplate_header_wrapper">
+	<div id="tooplate_header">
+    
+    	<div id="site_title">
+            <h1><a href="http://www.tooplate.com" rel="nofollow"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/tooplate_logo.png" alt="logo" /><span>Your tagline goes here</span></a></h1>
+        </div> <!-- end of site_title -->
+        
+        <div id="header_right">
+        
+        	<div id="social_box">
+                <ul>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/facebook.png" alt="facebook" /></a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/twitter.png" alt="twitter" /></a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/linkedin.png" alt="linkin" /></a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/technorati.png" alt="technorati" /></a></li>
+                    <li><a href="#"><img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/myspace.png" alt="myspace" /></a></li>                
+                </ul>
+                <div class="cleaner"></div>
+			</div>   
+			         
+             <div id="search_box">
+                <form action="#" method="get">
+                    <input type="text" value="Search" name="q" size="10" id="searchfield" title="searchfield" onfocus="clearText(this)" onblur="clearText(this)" />
+                  <input type="submit" name="Search" value="" id="searchbutton" title="Search" />
+                </form>
+            </div>
+            	
+        </div>
+    
+    </div>
+</div>
+
+<div id="tooplate_middle_wrapper">
+	<div id="tooplate_middle">
+    
+    	<img src="<?php echo Yii::app()->request->baseUrl;?>/assets/themes/corporate_blue/images/tooplate_image_01.jpg" alt="Image 01" />
+        
+        <div id="middle_content">
+        	<h2>Lorem ipsum dolor sit amet</h2>
+            <p>Nullam in justo lacus, id viverra elit. Ut dignissim auctor purus, id vestibulum turpis rutrum eget. Maecenas ut ipsum pellentesque purus ullamcorper fringilla. Nunc in turpis non nisi egestas convallis in at massa.</p>
+            <div class="wwu_btn"><a href="#"></a></div>
+        </div>
+    
+    </div>
+</div>
+
+ <div id="tooplate_menu">
+                
+    <ul>
+        <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/page/" class="current">Home</a></li>
+        <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/page/about">About Us</a></li>
+        <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/page/services">Services</a></li>
+        <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/page/gallery">Gallery</a></li>
+        <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/page/contact">Contact</a></li>
+    </ul>    	
+
+	<div class="cleaner"></div>
+</div> <!-- end of templatetooplate_menu -->
+    
+<div id="tooplate_content">
+    
+    <?php echo $content; ?>
+	
+    <div class="cleaner"></div>
+</div>
+
+<div id="tooplate_footer_wrapper">
+
+     <div id="tooplate_footer">
+    
+        Copyright © 2048 <a href="#">alfianfaizYii.com</a>
+    
+    </div> 
+     <!-- end of templatetooplate_footer -->
+</div> 
+<!--   Free Website Template by t o o p l a t e . c o m   -->
+</body>
+</html>
