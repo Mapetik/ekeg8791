@@ -53,8 +53,9 @@
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/kelengkapan"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> &nbsp Kelola Kelengkapan</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Kelola POK</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/lihatpokbulanan"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Rencana Kegiatan Bulanan</a></li>
+							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/lihatpokbulananV2"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Rencana Kegiatan Bulanan V2</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/lihatpoktriwulan"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Rencana Kegiatan Triwulanan</a></li>
-							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Rencana Kegiatan Semester</a></li>
+							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/lihatpoksemester"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp Rencana Kegiatan Semester</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/inputrealisasi"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp Kelola Realisasi</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rekapseluruh/openData"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> &nbsp Rekap Realisasi Seluruh</a></li>
 							<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rekapbulanan"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> &nbsp Rekap Realisasi Bulanan</a></li>

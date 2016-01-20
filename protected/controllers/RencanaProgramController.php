@@ -454,19 +454,173 @@ class RencanaProgramController extends Controller
 		}
 	}
 
-	public function actionLihatPOKTriwulan(){
-		if(isset($_POST['bulan'])){
-			$dataKegiatanT1 = Kegiatan::model()->findAll('bulan BETWEEN 1,3');
-			$dataKegiatanT2 = Kegiatan::model()->findAll('bulan BETWEEN 4,6');
-			$dataKegiatanT3 = Kegiatan::model()->findAll('bulan BETWEEN 7,9');
-			$dataKegiatanT4 = Kegiatan::model()->findAll('bulan BETWEEN 10,12');
-			$this->render('rencanapokbulanan',array('bulan'=>$_POST['bulan'],
-													'dataKegiatanT1'=>$dataKegiatanT1,
-													'dataKegiatanT2'=>$dataKegiatanT2,
-													'dataKegiatanT3'=>$dataKegiatanT3,
-													'dataKegiatanT4'=>$dataKegiatanT4,));
+
+	public function actionLihatPOKBulananV2(){
+		if(isset($_POST['tahun_anggaran'])){
+			$tahun_anggaran = $_POST['tahun_anggaran'];
+		} else {$tahun_anggaran = date('Y');}
+
+
+		$sql = "SELECT kegiatan.id as id,
+				kegiatan.kode_kegiatan as kode_kegiatan,
+				kegiatan.nama_kegiatan as nama_kegiatan,
+				kegiatan.bulan  as bulan
+				FROM 
+				kegiatan,layanan,program 
+				WHERE 
+				program.id = layanan.id_program 
+				AND layanan.id = kegiatan.id_layanan 
+				AND program.status = '1' 
+				AND layanan.status = '1' 
+				AND kegiatan.status = '1' 
+				AND program.tahun_anggaran = :tahun_anggaran";
+
+		$connection = Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$command->bindParam(':tahun_anggaran',$_POST['tahun_anggaran'],PDO::PARAM_STR);
+		$dataKegiatan = $command->queryAll();
+		$this->render('lihatRencanaPOKBulananV2',array('dataKegiatan'=>$dataKegiatan,
+													'tahun_anggaran'=>$tahun_anggaran));
+	}
+
+	public function actionLihatPOKTriwulan($id=1){
+		if(isset($_POST['tahun_anggaran'])){
+			$tahun_anggaran = $_POST['tahun_anggaran'];
+		} else $tahun_anggaran = date('Y');
+
+		switch ($id) {
+			case 1:
+				$max = 3; $min = 1;
+				break;
+			case 2:
+				$max = 6; $min = 4;
+				break;
+			case 3:
+				$max = 9; $min = 7;
+				break;
+			case 4:
+				$max = 12; $min = 10;
+				break;
+			default:
+				$max = 3; $min = 1;
+				break;
 		}
-		else $this->redirect('index');				//.. ERROR PAGE HARUSNYA
+		$sql ="SELECT kegiatan.id as id,
+				kegiatan.kode_kegiatan as kode_kegiatan,
+				kegiatan.nama_kegiatan as nama_kegiatan,
+				kegiatan.bulan  as bulan
+				FROM 
+				kegiatan,layanan,program 
+				WHERE 
+				program.id = layanan.id_program 
+				AND layanan.id = kegiatan.id_layanan 
+				AND program.status = '1' 
+				AND layanan.status = '1' 
+				AND kegiatan.status = '1' 
+				AND program.tahun_anggaran = :tahun_anggaran
+				AND kegiatan.bulan BETWEEN $min AND $max";
+			$connection = Yii::app()->db;
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':tahun_anggaran',$tahun_anggaran,PDO::PARAM_STR);
+			$dataKegiatan = $command->queryAll($sql);
+
+		if(Yii::app()->request->isAjaxRequest){
+			$this->renderPartial('_triwulan',array('dataKegiatan'=>$dataKegiatan,
+												'max'=>$max,'min'=>$min));
+		} else 
+		$this->render('rencanapoktriwulan',array('dataKegiatan'=>$dataKegiatan,
+													'max'=>$max,'min'=>$min,'id'=>$id,
+													'tahun_anggaran'=>$tahun_anggaran));
+	}
+
+	public function actionLihatPOKTriwulanPartial($id=2){
+		if(isset($_POST['tahun_anggaran'])){
+			$tahun_anggaran = $_POST['tahun_anggaran'];
+		} else $tahun_anggaran = date('Y');
+
+		if(Yii::app()->request->isAjaxRequest){
+			switch ($id) {
+			case 1:
+				$max = 3; $min = 1;
+				break;
+			case 2:
+				$max = 6; $min = 4;
+				break;
+			case 3:
+				$max = 9; $min = 7;
+				break;
+			case 4:
+				$max = 12; $min = 10;
+				break;
+		}
+			$sql ="SELECT kegiatan.id as id,
+				kegiatan.kode_kegiatan as kode_kegiatan,
+				kegiatan.nama_kegiatan as nama_kegiatan,
+				kegiatan.bulan  as bulan
+				FROM 
+				kegiatan,layanan,program 
+				WHERE 
+				program.id = layanan.id_program 
+				AND layanan.id = kegiatan.id_layanan 
+				AND program.status = '1' 
+				AND layanan.status = '1' 
+				AND kegiatan.status = '1' 
+				AND program.tahun_anggaran = :tahun_anggaran
+				AND kegiatan.bulan BETWEEN $min AND $max";
+			$connection = Yii::app()->db;
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':tahun_anggaran',$tahun_anggaran,PDO::PARAM_STR);
+			$dataKegiatan = $command->queryAll($sql);
+			$this->renderPartial('_triwulan',array('dataKegiatan'=>$dataKegiatan,
+													'max'=>$max,'min'=>$min));
+		} 
+
+		
+	}
+
+	public function actionLihatPOKSemester($id=1){
+		if(isset($_POST['tahun_anggaran'])){
+			$tahun_anggaran = $_POST['tahun_anggaran'];
+		} else $tahun_anggaran = date('Y');
+
+		switch ($id) {
+			case 1:
+				$min = 1; $max = 6;
+				break;
+			case 2:
+				$min = 7; $max = 12;
+				break;
+			default:
+				$min = 1; $max = 6;
+				break;
+		}
+
+		$sql = "SELECT kegiatan.id as id,
+				kegiatan.kode_kegiatan as kode_kegiatan,
+				kegiatan.nama_kegiatan as nama_kegiatan,
+				kegiatan.bulan  as bulan
+				FROM 
+				kegiatan,layanan,program 
+				WHERE 
+				program.id = layanan.id_program 
+				AND layanan.id = kegiatan.id_layanan 
+				AND program.status = '1' 
+				AND layanan.status = '1' 
+				AND kegiatan.status = '1' 
+				AND program.tahun_anggaran = :tahun_anggaran
+				AND kegiatan.bulan BETWEEN $min AND $max";
+		$connection = Yii::app()->db;
+		$command = $connection->createCommand($sql);
+		$command->bindParam(':tahun_anggaran',$tahun_anggaran,PDO::PARAM_STR);
+		$dataKegiatan = $command->queryAll();
+
+		if(Yii::app()->request->isAjaxRequest){
+			$this->renderPartial('_semester',array('dataKegiatan'=>$dataKegiatan,'max'=>$max,'min'=>$min));
+		} else {
+			$this->render('rencanapoksemester',array('dataKegiatan'=>$dataKegiatan,
+												'max'=>$max,'min'=>$min,'id'=>$id,
+												'tahun_anggaran'=>$tahun_anggaran));
+		}
 	}
 	
 }
