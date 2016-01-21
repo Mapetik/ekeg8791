@@ -202,7 +202,7 @@
 															<td><?php echo $saldo=$key3['target']- $key4['total']?></td>
 															<td></td>
 															<td><?php echo $key3['penanggung_jawab'] ?></td>
-															<td><?php echo AlatUmum::tampil_bulan($key3['bulan']) ?></td>
+															<td><?php //echo AlatUmum::tampil_bulan($key3['bulan']) ?></td>
 														</tr>
 												<?php endforeach ?>
 											</tr>

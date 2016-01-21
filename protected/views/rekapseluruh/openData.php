@@ -48,7 +48,7 @@
 						
 						<?php
 			
-						echo CHtml::dropDownList('the_cats','select_value',array('Pilih Tahun',2015=>'2015',2014=>'2014',2013=>'2013',2012=>'2012',2011=>'2011'),array('onchange' => 'document.location.href = "" + this.value','class'=>'btn btn-danger','name'=>'tahun'));?>
+						echo CHtml::dropDownList('the_cats','select_value',array('Pilih Tahun',2015=>'2015',2014=>'2014',2013=>'2013',2012=>'2012',2011=>'2011'),array('onchange' => 'document.location.href = "'.Yii::app()->request->baseUrl.'/rekapseluruh/openData/" + this.value','class'=>'btn btn-danger','name'=>'tahun'));?>
 						<?php echo CHtml::endForm(); ?>
 						
 						</td>

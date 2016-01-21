@@ -10,5 +10,9 @@ class DownloadRekapController extends Controller
 	{
 		$this->render("index");
 	}
+
+	public function actionPreview(){
+		
+	}
 	
 }
