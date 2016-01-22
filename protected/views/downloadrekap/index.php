@@ -144,12 +144,14 @@
 				<li class="list-group-item"><a href="">Kegiatan Kegiatan dalam Bulan</a>
 					<p>
 						Halaman ini anda akan mendapatkan laporan kegiatan dalam bulan tertentu
+						<form method="post" action="<?php echo Yii::app()->request->baseUrl ?>/downloadrekap/downloadv2">
 						<div class="form-group">
-							<select class="form-control">
+							<input type="hidden" name="pada" value="bulan">
+							<select name="tahun_anggaran" class="form-control">
 								<?php AlatUmum::optListYears() ?>
 							</select>
 						</div>
-						<div class="form-group">
+						<div name="bulan" class="form-group">
 							<select class="form-control">
 								<?php AlatUmum::optListMonth() ?>
 							</select>
@@ -157,35 +159,40 @@
 						<div class="form-group">
 							<button class="form-control btn btn-primary">Download Daftar Kegiatan</button>
 						</div>
+						</form>
 					</p>
 				</li>
 				<li class="list-group-item"><a href="">Kegiatan Kegiatan Hingga Bulan</a>
 					<p>
 						Halaman ini anda akan mendapatkan laporan kegiatan Hingga bulan tertentu
+						<form method="post" action="<?php echo Yii::app()->request->baseUrl ?>/downloadrekap/downloadv2">
 						<div class="form-group">
-							<select class="form-control">
+							<select name="tahun_anggaran" class="form-control">
 								<?php AlatUmum::optListYears() ?>
 							</select>
 						</div>
 						<div class="form-group">
-							<select class="form-control">
+							<select name="bulan"  class="form-control">
 								<?php AlatUmum::optListMonth() ?>
 							</select>
 						</div>
 						<div class="form-group">
 							<button class="form-control btn btn-primary">Download Daftar Kegiatan</button>
 						</div>
+						</form>
 					</p>
 				</li>
 				<li class="list-group-item"><a href="">Kegiatan Seluruh dalam Satu tahun</a>
 					<p>
-						Halaman ini anda akan mendapatkan laporan kegiatan Hingga bulan tertentu
+						Halaman ini anda akan mendapatkan laporan kegiatan Pada Tahun tertentu
+						<form method="post" action="<?php echo Yii::app()->request->baseUrl ?>/downloadrekap/downloadv2">
 						<div class="form-group">
-							<select class="form-control">
+							<select name="tahun_anggaran" class="form-control">
 								<?php AlatUmum::optListYears() ?>
 							</select>
 						<div class="form-group">
-							<button class="form-control btn btn-primary">Download Daftar Kegiatan</button>
+							<button type="submit" class="form-control btn btn-primary">Download Daftar Kegiatan</button>
+						</div>
 						</div>
 					</p>
 				</li>

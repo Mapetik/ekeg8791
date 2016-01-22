@@ -71,6 +71,44 @@
 			return $result;
 		}
 
+		public static function getRealisasi($kegiatan,$bulan){
+			
+			$sql = "SELECT * 
+					FROM realisasi
+					WHERE id_kegiatan = :id_kegiatan
+					AND bulan = :bulan
+					";
+			$connection = Yii::app()->db;
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':id_kegiatan',$kegiatan,PDO::PARAM_STR);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+
+			//format tanggal ke tgl-namabln-thn
+			if(isset($result[0])){
+				return $result[0]['nominal'];
+			} else return 0;
+		}
+
+		public static function getSumOfRealisasi($kegiatan,$bulan){
+			
+			$sql = "SELECT SUM(nominal) as nominal
+					FROM realisasi
+					WHERE id_kegiatan = :id_kegiatan
+					AND bulan <= :bulan
+					";
+			$connection = Yii::app()->db;
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':id_kegiatan',$kegiatan,PDO::PARAM_STR);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+
+			//format tanggal ke tgl-namabln-thn
+			if(isset($result[0]['nominal'])){
+				return $result[0]['nominal'];
+			} else return 0;
+		}
+
 		//membuat function untuk format jam
 		public function formatTime($param){
 			//format jam ke format AM/PM
@@ -78,23 +116,73 @@
 		}
 
 		// Mengambil nilai realisasi dari program
-		public static function getRealisasiFromProgram($id){
-		$sql = " SELECT 
-				kegiatan.realisasi as realisasi
-				FROM 
-				program,layanan,realisasi 
-				WHERE layanan.id_program=program.id 
-				AND kegiatan.id_layanan = layanan.id 
-				AND program.id = :id";
-		$connection = Yii::app()->db;
-		$command = $connection->createCommand($sql);
-		$command->bindParam(':id',$id,PDO::PARAM_STR);
-		$result = count($command->queryAll());
-
-		foreach ($result as $key => $value) {
-			echo $key->realisasi;
+		public static function getRealisasiOnMonthFromProgram($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM program, layanan, kegiatan, realisasi 
+					WHERE program.id = layanan.id_program 
+					AND layanan.id = kegiatan.id_layanan 
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND layanan.status = '1' 
+					AND kegiatan.status = '1'
+					AND realisasi.bulan = :bulan
+					AND program.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			return $result[0]['jumlah'];
 		}
-	}
+		public static function getRealisasiUntilMonthFromProgram($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM program, layanan, kegiatan, realisasi 
+					WHERE program.id = layanan.id_program 
+					AND layanan.id = kegiatan.id_layanan 
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND layanan.status = '1' 
+					AND kegiatan.status = '1'
+					AND realisasi.bulan <= :bulan
+					AND program.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			return $result[0]['jumlah'];
+		}
+
+		public static function getRealisasiOnMonthFromLayanan($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM layanan, kegiatan, realisasi 
+					WHERE 
+					layanan.id = kegiatan.id_layanan 
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND kegiatan.status = '1' 
+					AND realisasi.bulan = :bulan 
+					AND layanan.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			return $result[0]['jumlah'];
+		}
+		public static function getRealisasiUntilMonthFromLayanan($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM layanan, kegiatan, realisasi 
+					WHERE 
+					layanan.id = kegiatan.id_layanan 
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND kegiatan.status = '1'
+					AND realisasi.bulan <= :bulan
+					AND layanan.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			return $result[0]['jumlah'];
+		}
 
 	public static function getValueOf($tabel,$kolom,$id){
 		$sql = "SELECT $kolom FROM $tabel WHERE id = $id";
