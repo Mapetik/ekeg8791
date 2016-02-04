@@ -11,6 +11,9 @@
  * @property string $nip
  * @property string $tlp
  * @property string $unitbagian
+ * @property integer $recoverable
+ * @property string $username
+ * @property string $password
  */
 class User extends CActiveRecord
 {
@@ -40,14 +43,14 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nama, level, status, nip, tlp, unitbagian', 'required'),
-			array('level, status', 'numerical', 'integerOnly'=>true),
-			array('nama', 'length', 'max'=>32),
+			array('nama, level, status, nip, tlp, unitbagian, username, password', 'required'),
+			array('level, status, recoverable', 'numerical', 'integerOnly'=>true),
+			array('nama, username', 'length', 'max'=>32),
 			array('nip, unitbagian', 'length', 'max'=>20),
 			array('tlp', 'length', 'max'=>14),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nama, level, status, nip, tlp, unitbagian', 'safe', 'on'=>'search'),
+			array('id, nama, level, status, nip, tlp, unitbagian, recoverable, username, password', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,6 +78,9 @@ class User extends CActiveRecord
 			'nip' => 'Nip',
 			'tlp' => 'Tlp',
 			'unitbagian' => 'Unitbagian',
+			'recoverable' => 'Recoverable',
+			'username' => 'Username',
+			'password' => 'Password',
 		);
 	}
 
@@ -96,9 +102,40 @@ class User extends CActiveRecord
 		$criteria->compare('nip',$this->nip,true);
 		$criteria->compare('tlp',$this->tlp,true);
 		$criteria->compare('unitbagian',$this->unitbagian,true);
+		$criteria->compare('recoverable',$this->recoverable);
+		$criteria->compare('username',$this->username,true);
+		$criteria->compare('password',$this->password,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function hash($value)
+	{
+	   return crypt($value);
+	}
+
+	/**
+ * We need to call the encryption function whenever we store a password,
+ * – on create and on update –
+ * so we will overload the beforeSave function to do the hashing.
+ */
+	protected function beforeSave()
+	{
+	 if (parent::beforeSave()) {
+	   if (!empty($this->password))
+	     $this->pwd_hash = $this->hash($this->password);
+
+	   /* contoh kalau ada tgl_masuk dan tgl keluar
+	   if ($this->isNewRecord)
+	     $this->tgl_masuk = new CDbExpression('NOW()');
+	 
+	   $this->tgl_update = new CDbExpression('NOW()');
+	   */
+
+	   return true;
+	 }
+	 return false;
 	}
 }

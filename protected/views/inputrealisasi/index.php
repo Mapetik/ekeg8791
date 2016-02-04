@@ -36,9 +36,7 @@
 						<td>:</td>
 						<td>
 							<select class="form-control" name="bulan" id="tahun_anggaran" required="required">
-								<?php for ($i=date('Y'); $i > date('Y')-5; $i--) { 
-									echo "<option value=$i>$i</option>";
-								} ?>
+								<?php AlatUmum::activeOptListYears(Yii::app()->request->cookies['tahun_anggaran']->value) ?>
 							</select>
 						</td>
 					</tr>

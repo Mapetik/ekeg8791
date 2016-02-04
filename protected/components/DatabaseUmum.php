@@ -131,7 +131,27 @@
 			$command = $connection->createCommand($sql);
 			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
 			$result = $command->queryAll();
-			return $result[0]['jumlah'];
+			if($result[0]['jumlah']){
+				return $result[0]['jumlah'];
+			} else return '0';
+		}
+		public static function getTargetOnMonthFromProgram($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(kegiatan.target) as target 
+					FROM program,layanan,kegiatan
+					WHERE program.id = layanan.id_program 
+					AND layanan.id = kegiatan.id_layanan 
+					AND layanan.status = '1' 
+					AND kegiatan.status = '1'
+					AND kegiatan.bulan = :bulan
+					AND program.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			if($result[0]['target']){
+				return $result[0]['target'];
+			} else return '0';
 		}
 		public static function getRealisasiUntilMonthFromProgram($id,$bulan){
 			$connection = Yii::app()->db;
@@ -148,7 +168,9 @@
 			$command = $connection->createCommand($sql);
 			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
 			$result = $command->queryAll();
-			return $result[0]['jumlah'];
+			if($result[0]['jumlah']){
+				return $result[0]['jumlah'];
+			} else return '0';
 		}
 
 		public static function getRealisasiOnMonthFromLayanan($id,$bulan){
@@ -165,7 +187,26 @@
 			$command = $connection->createCommand($sql);
 			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
 			$result = $command->queryAll();
-			return $result[0]['jumlah'];
+			if($result[0]['jumlah']){
+				return $result[0]['jumlah'];
+			} else return '0';
+		}
+		public static function getTargetOnMonthFromLayanan($id,$bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(kegiatan.target) as target 
+					FROM layanan,kegiatan
+					WHERE 
+					AND layanan.id = kegiatan.id_layanan  
+					AND kegiatan.status = '1'
+					AND kegiatan.bulan = :bulan
+					AND layanan.id = $id";
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			if($result[0]['target']){
+				return $result[0]['target'];
+			} else return '0';
 		}
 		public static function getRealisasiUntilMonthFromLayanan($id,$bulan){
 			$connection = Yii::app()->db;
@@ -182,6 +223,48 @@
 			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
 			$result = $command->queryAll();
 			return $result[0]['jumlah'];
+		}
+		public static function getRealisasiOnMonth($bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM program,layanan, kegiatan, realisasi 
+					WHERE 
+					layanan.id = kegiatan.id_layanan 
+					AND program.id = layanan.id
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND kegiatan.status = '1' 
+					AND layanan.status = '1' 
+					AND program.status = '1' 
+					AND realisasi.bulan = :bulan";
+
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			if($result[0]['jumlah']){
+				return $result[0]['jumlah'];
+			} else return '0';
+		}
+		public static function getRealisasiUntilMonth($bulan){
+			$connection = Yii::app()->db;
+			$sql = "SELECT 
+					sum(realisasi.nominal) as jumlah 
+					FROM program,layanan, kegiatan, realisasi 
+					WHERE 
+					layanan.id = kegiatan.id_layanan 
+					AND program.id = layanan.id
+					AND realisasi.id_kegiatan = kegiatan.id 
+					AND kegiatan.status = '1' 
+					AND layanan.status = '1' 
+					AND program.status = '1' 
+					AND realisasi.bulan <= :bulan";
+
+			$command = $connection->createCommand($sql);
+			$command->bindParam(':bulan',$bulan,PDO::PARAM_STR);
+			$result = $command->queryAll();
+			if($result[0]['jumlah']){
+				return $result[0]['jumlah'];
+			} else return '0';
 		}
 
 	public static function getValueOf($tabel,$kolom,$id){

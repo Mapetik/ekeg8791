@@ -271,5 +271,9 @@ class DownloadRekapController extends Controller
 	    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 	    $objWriter->save('php://output');
 	}
+
+	public function actionTryChartRealisasi(){
+		
+	}
 	
 }

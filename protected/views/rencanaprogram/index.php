@@ -42,11 +42,7 @@
 						<td><?php echo DatabaseUmum::getPersentaseRealisasi("all","1") ?> (<a href="#">halaman rekap</a>)</td>
 						<td>
 							<select class="form-control" id="tahun_anggaran">
-								<?php for ($i=date('Y')+4; $i > date('Y')-5; $i--) {
-								$select_tahun = "";
-								if (isset($tahun_anggaran) && $i == $tahun_anggaran) $select_tahun = "selected=selected";
-									echo "<option value=$i $select_tahun>$i</option>";
-								} ?>
+								<?php AlatUmum::activeOptListYears(Yii::app()->request->cookies['tahun_anggaran']->value) ?>
 							</select>
 						</td>
 					</tr>

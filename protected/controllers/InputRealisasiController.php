@@ -8,7 +8,9 @@ class InputRealisasiController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran'=>date('Y')));
+		if(isset(Yii::app()->request->cookies['tahun_anggaran']->value)) $tahun_anggaran = Yii::app()->request->cookies['tahun_anggaran']->value;
+		else $tahun_anggaran = "2013";
+		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran'=>$tahun_anggaran));
 		$this->render("index",array('dataProgram' => $dataProgram));
 	}
 

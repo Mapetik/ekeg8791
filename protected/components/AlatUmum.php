@@ -38,6 +38,15 @@
 				echo "<option value=$i $select_bulan>".date('M',mktime(0,0,0,$i+1,0,0))."</option>";
 			}
 		}
+
+		public static function setCookieTahun($tahun_anggaran){
+			Yii::app()->request->cookies['tahun_anggaran'] = new CHttpCookie('tahun_anggaran', $tahun_anggaran);
+		}
+		public static function getCookieTahun(){
+			if(isset(Yii::app()->request->cookies['tahun_anggaran']->value))
+				return Yii::app()->request->cookies['tahun_anggaran']->value; else
+			Yii::app()->request->cookies['tahun_anggaran'] = new CHttpCookie('tahun_anggaran', date('Y'));
+		}
 	}
 	
 

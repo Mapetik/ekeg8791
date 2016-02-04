@@ -9,21 +9,24 @@ class RencanaProgramController extends Controller
 	public function actionIndex()
 	{
 		// "status=:status",array(':status'=>"1")
-		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => date('Y')));
+		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));
 
 		if(isset($_GET['tahun_anggaran'])){
-			$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => $_GET['tahun_anggaran']));			
+			AlatUmum::setCookieTahun($_GET['tahun_anggaran']);
+			$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));			
 			Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
-			$this->render("index",array("dataProgram"=>$dataProgram,"tahun_anggaran"=>$_GET['tahun_anggaran']));
+			$this->render("index",array("dataProgram"=>$dataProgram,"tahun_anggaran"=>AlatUmum::getCookieTahun()));
 		}
 
 		Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
-		$this->render("index",array("dataProgram"=>$dataProgram,"tahun_anggaran"=>date('Y')));
+		// echo AlatUmum::getCookieTahun();
+		$this->render("index",array("dataProgram"=>$dataProgram,"tahun_anggaran"=>AlatUmum::getCookieTahun()));
 	}
 
 	public function actionProgramPartial(){
 		if(Yii::app()->request->isAjaxRequest){
 			if(isset($_POST['tahun_anggaran'])){
+				AlatUmum::setCookieTahun($_POST['tahun_anggaran']);
 				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran'=>$_POST['tahun_anggaran']));
 				$this->renderPartial('_program',array("dataProgram"=>$dataProgram));
 			}
@@ -416,6 +419,7 @@ class RencanaProgramController extends Controller
 
 	public function actionLihatPOKBulanan(){
 		if(isset($_POST['tahunAnggaran']) && isset($_POST['bulan'])){
+			AlatUmum::setCookieTahun($_POST['tahunAnggaran']);
 			$connection = Yii::app()->db;
 			$sql = "SELECT 
 					kegiatan.id as id,

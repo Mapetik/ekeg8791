@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/baru.css">
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl?>/assets/js/bootstrap.js"></script>
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl?>/assets/highchart/highcharts.js"></script>
 </head>
 <body>
 	<div class="container-fluid">

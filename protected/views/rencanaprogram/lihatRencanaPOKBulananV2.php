@@ -16,10 +16,7 @@
 								<div class="form-group">
 									<select name="tahun_anggaran" class="form-control">
 										<option>-- Pilih tahun -- </option>
-										<?php for ($i=date('Y'); $i > date('Y')-5; $i--) { 
-											if(isset($tahun_anggaran) && $tahun_anggaran == $i) $selectTahun = "selected=selected"; else $selectTahun = "";
-											echo "<option value=$i $selectTahun>$i</option>";
-										} ?>
+										<?php AlatUmum::activeOptListYears(AlatUmum::getCookieTahun()); ?>
 									</select>
 								</div>
 								<div class="form-group  pull-right">

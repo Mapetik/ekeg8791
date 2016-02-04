@@ -6,6 +6,30 @@ class KelengkapanController extends Controller
 	/**
 	 * Declares defualt home for index
 	 */
+
+	public function accessRules(){
+		$model= new  User;
+		$level1 = $model->findByAttributes(array('level'=>1));
+		$level2 = $model->findByAttributes(array('level'=>2));
+	    return array(
+	    	array('allow',  //semua user dapat mengakses halaman 'index' dan 'view'
+	          'actions'=>array('index','view'),
+	          'users'=>array('*'),
+	         ),
+	         array('allow', //hanya user authenticated dapat akses 'create' dan 'update'
+	          'actions'=>array('admin','create'),
+	          'users'=>array('@'),
+	         ),
+	         array('allow', //hanya admin lvl 1 yang dapat akses 'admin' dan 'delete'
+	          'actions'=>array('update','delete'),
+	          'users'=>array($level->username),
+	         ),
+	         array('deny',  // tolak semua user
+	          'users'=>array('*'),
+	         ),
+	    );
+	}
+
 	public function actionIndex()
 	{
 		$dataSD = SumberDana::model()->findAll("'1' ORDER BY status DESC");
