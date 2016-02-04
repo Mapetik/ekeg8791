@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-16">
+	<div class="col-md-12">
 		<!-- Error Message -->
 		<?php foreach (Yii::app()->user->getFlashes() as $key => $value): ?>
 		<div class="alert alert-success">
@@ -13,11 +13,9 @@
 				POK -- PPS UNNES
 			</div>
 			<div class="panel-body">
-			
-
 				<!-- // Deskripsi Umum Halaman -->
 				<div class="row">
-					<div class="col-md-13">
+					<div class="col-md-10">
 						<p>
 						Tabel berikut menyajikan daftar program yang telah tercatat dalam database lengkap dengan rinciannya. <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz
 						</p>

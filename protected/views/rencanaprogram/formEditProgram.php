@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6 f-margin-2 f-padding-2 f-border-lightgrey alert alert-warning">
+	<div class="col-md-4 f-margin-2 f-padding-2 f-border-lightgrey alert alert-warning">
 		<h3>Data Tersimpan</h3>
 		<table class="table">
 			<tr>
@@ -27,7 +27,7 @@
 		</table>			
 	</div>
 	<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/UpdateProgram/">
-	<div class="col-md-8 col-md-offset-1">
+	<div class="col-md-7">
 			<div class="form-group">
 				<label>Kode</label>
 				<input type="text" name="kodeTP" value="<?php echo $dataProgram['kode_program'] ?>" class="form-control" >

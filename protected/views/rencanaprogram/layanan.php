@@ -57,27 +57,27 @@
 							 	?> (<?php if($realisasi!=0){echo AlatUmum::formatDecimal($realisasi/$key->target * 100);} else echo "0"; ?>%)</td>
 							<td><?php echo count($key->kegiatan) ?></td>
 							<td> 
-								<div class="row">
-									<div class="col-md-5">
-										<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
-										<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusLayanan/<?php echo $key->id ?>">
-											<input type="hidden" value="<?php echo $key->id ?>" name="id">
-											<input type="hidden" value="<?php echo $statusValue ?>" name="status">
-											<input type="hidden" value="<?php echo $key->id_program ?>" name="id_program">
-											<button type="submit" name="btnHapus" class="btn form-control"><span class="glyphicon glyphicon-remove"></span></button>
-										</form>
-									</div>
-									<div class="col-md-5">
-										<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editLayanan/">
-											<input type="hidden" value="<?php echo $key->id; ?>" name="id">
-											<input type="hidden" value="<?php echo $key->id_program; ?>" name="id_program">
-											<button type="submit" class="btn form-control"><span class="glyphicon glyphicon-edit"></span></button>
-										</form>
-									</div>
-									<div class="col-md-6">
-										<a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/kegiatan/<?php echo $key->id ?>" class="btn btn-primary form-control">Detil</a>
-									</div>
-								</div>
+								<table>
+									<tr>
+										<td><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/kegiatan/<?php echo $key->id ?>" class="btn btn-primary form-control">Detil</a></td>
+										<td>
+											<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editLayanan/">
+												<input type="hidden" value="<?php echo $key->id; ?>" name="id">
+												<input type="hidden" value="<?php echo $key->id_program; ?>" name="id_program">
+												<button type="submit" class="btn form-control"><span class="glyphicon glyphicon-edit"></span></button>
+											</form>
+										</td>
+										<td>
+											<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
+											<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusLayanan/<?php echo $key->id ?>">
+												<input type="hidden" value="<?php echo $key->id ?>" name="id">
+												<input type="hidden" value="<?php echo $statusValue ?>" name="status">
+												<input type="hidden" value="<?php echo $key->id_program ?>" name="id_program">
+												<button type="submit" name="btnHapus" class="btn form-control"><span class="glyphicon glyphicon-remove"></span></button>
+											</form>
+										</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					<?php endforeach ?>

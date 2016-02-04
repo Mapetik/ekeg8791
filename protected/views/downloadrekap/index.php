@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-7 f-panel-2">
+	<div class="col-md-6 f-panel-2">
 		<div class="f-panel-heading">
 			<h2>Rencana (POK)</h2>
 		</div>
@@ -135,7 +135,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="col-md-7 f-panel-2">
+	<div class="col-md-6 f-panel-2">
 		<div class="f-panel-heading">
 			<h2>Rekap Realisasi</h2>
 		</div>

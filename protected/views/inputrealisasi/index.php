@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6 f-margin-3 f-margin-top-false f-padding-2 f-border-lightgrey alert alert-success">
+	<div class="col-md-4 f-margin-3 f-margin-top-false f-padding-2 f-border-lightgrey alert alert-success">
 		<h3>Input Realisasi Kegiatan</h3>
 		<p>
 			Halaman ini adalah halaman untuk mencatat Realisasi yang dilaksanakan pada bulan tertentu<p>
@@ -14,7 +14,7 @@
 
 		<a href="<?php echo Yii::app()->request->baseUrl; ?>/inputrealisasi/daftarrealisasi" class="btn btn-danger form-control"><h4>Halaman Edit Realisasi</h4></a>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-6">
 		
 		<?php foreach (Yii::app()->user->getFlashes() as $key => $value): ?>
 		<div class="alert alert-success">

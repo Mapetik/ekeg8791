@@ -66,24 +66,26 @@
 									<td><?php echo $key->PenanggungJawab['nama'] ?></td>
 									<td><?php echo $key->SumberDana['nama'] ?></td>
 									<td width="90px">
-										<div class="row">
-											<div class="col-md-8">
-												<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
-												<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusKegiatan/<?php echo $key->id ?>">
-													<input type="hidden" value="<?php echo $key->id ?>" name="id">
-													<input type="hidden" value="<?php echo $statusValue ?>" name="status">
-													<input type="hidden" value="<?php echo $key->id_layanan ?>" name="id_layanan">
-													<button type="submit" name="btnHapus" class="btn form-control"><span class="<?php echo $classBtn ?>"></span></button>
-												</form>
-											</div>
-											<div class="col-md-8">
-												<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editKegiatan/">
-													<input type="hidden" value="<?php echo $key->id; ?>" name="id">
-													<input type="hidden" value="<?php echo $key->id_layanan ?>" name="id_layanan">
-													<button type="submit" class="btn form-control"><span class="glyphicon glyphicon-edit"></span></button>
-												</form>
-											</div>
-										</div>
+										<table>
+											<tr>
+												<td>
+													<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editKegiatan/">
+														<input type="hidden" value="<?php echo $key->id; ?>" name="id">
+														<input type="hidden" value="<?php echo $key->id_layanan ?>" name="id_layanan">
+														<button type="submit" class="btn form-control"><span class="glyphicon glyphicon-edit"></span></button>
+													</form>
+												</td>
+												<td>
+													<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
+													<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusKegiatan/<?php echo $key->id ?>">
+														<input type="hidden" value="<?php echo $key->id ?>" name="id">
+														<input type="hidden" value="<?php echo $statusValue ?>" name="status">
+														<input type="hidden" value="<?php echo $key->id_layanan ?>" name="id_layanan">
+														<button type="submit" name="btnHapus" class="btn form-control"><span class="<?php echo $classBtn ?>"></span></button>
+													</form>
+												</td>
+											</tr>
+										</table>
 									</td>
 								</tr>
 							<?php endforeach ?>

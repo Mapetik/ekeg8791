@@ -34,25 +34,26 @@
 								?>
 								</td>
 							<td >
-								<div class="row">
-									<div class="col-md-6">
-										<a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/layanan/<?php echo $key->id ?>" class="btn">Detil</a>
-									</div>
-									<div class="col-md-5">
-										<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editProgram/">
-											<input type="hidden" value="<?php echo $key->id; ?>" name="id">
-											<button type="submit" class="btn form-control"><span class="glyphicon glyphicon-edit"></span></button>
-										</form>
-									</div>
-									<div class="col-md-5">
-										<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
-									<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusProgram/<?php echo $key->id ?>">
-										<input type="hidden" value="<?php echo $key->id ?>" name="id">
-										<input type="hidden" value="<?php echo $statusValue ?>" name="status">
-										<button type="submit" name="btnHapus" class="btn form-control"><span class="<?php echo $classBtn ?>"></span></button>
-									</form>
-									</div>
-								</div>
+								<table>
+									<tr>
+										<td><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/layanan/<?php echo $key->id ?>" class="btn btn-default">Detil</a></td>
+										<td>
+											<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/editProgram/">
+												<input type="hidden" value="<?php echo $key->id; ?>" name="id">
+												<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></button>
+											</form>
+										</td>
+										<td>
+											<?php if($key->status=='1') {$statusValue=0;$classBtn = "glyphicon glyphicon-remove";$status = "Hapus";} else {$statusValue=1;$classBtn = "glyphicon glyphicon-ok";$status = "Recover";} ?>
+											<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/hapusProgram/<?php echo $key->id ?>">
+												<input type="hidden" value="<?php echo $key->id ?>" name="id">
+												<input type="hidden" value="<?php echo $statusValue ?>" name="status">
+												<button type="submit" name="btnHapus" class="btn btn-default"><span class="<?php echo $classBtn ?>"></span></button>
+											</form>
+										</td>
+									</tr>
+								</table>
+								
 							</td>
 						</tr>
 					<?php endforeach ?>
