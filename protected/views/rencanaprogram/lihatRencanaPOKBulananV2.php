@@ -1,17 +1,42 @@
 <div class="row">
-	<div class="col-md-16">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
+	<div class="col-md-12">
+		<div class="box box-danger">
+			<div class="box-header">
+				<h3>Grafik Pergerakan Rencana Realisasi</h3>
+			</div>
+			<div class="box-body">
+				<!-- HIGHCHART -->
+				<script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/highchart/highcharts.js"></script>
+				<?php 
+					$this->Widget('ext.highcharts.highcharts.HighchartsWidget', array(
+					   'options'=>'{
+					      "title": { "text": "Sebaran Realisasi Seluruh Program" },
+					      "xAxis": {
+					         "categories": ["Januari", "Februari", "Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Desember"]
+					      },
+					      "yAxis": {
+					         "title": { "text": "Fruit eaten" }
+					      },
+					      "series": [
+					         { "name": "Program", "data": ['.$dataGrafikSeluruh.'] }
+					      ]
+					   }'
+					));
+				 ?>
+			</div>
+		</div>
+		<div class="box box-danger">
+			<div class="box-header">
 				Daftar Kegiatan & Rincian Bulan 
 			</div>
-			<div class="panel-body">
+			<div class="box-body">
 				<!-- // Deskripsi Umum Halaman -->
 				<div class="row">
 					<div class="col-md-12">
 						Tabel berikut menyajikan daftar Kegiatan yang telah tercatat dalam database lengkap dengan rinciannya. <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz
 					</div>
-					<div class="col-md-16">
-						<div class="f-box  f-padding-1 alert alert-warning clearfix">
+					<div class="col-md-4">
+						<div class="f-box  f-padding-1 clearfix">
 							<form class="form-inline" action="#" method="post">
 								<div class="form-group">
 									<select name="tahun_anggaran" class="form-control">
@@ -19,14 +44,14 @@
 										<?php AlatUmum::activeOptListYears(AlatUmum::getCookieTahun()); ?>
 									</select>
 								</div>
-								<div class="form-group  pull-right">
+								<div class="form-group">
 									<input type="submit" name="cariRealisasi" value="Tampilkan Daftar" class="btn btn-danger form-control" >
 								</div>
 							</form>
 						</div>
 					</div>
 					<?php if(isset($dataKegiatan)) : ?>
-					<div class="col-sm-16 col-md-16">
+					<div class="col-sm-12 col-md-12">
 						<table class="table table-bordered">
 							<tr>
 								<td>Jumlah Kegiatan</td>
@@ -66,8 +91,8 @@
 									<td><?php echo $key['nama_kegiatan'] ?></td>
 									<?php 
 									for($i=1;$i<13;$i++) {
-										if($i == $key['bulan']) $result = "yes"; else $result = " ";
-										echo "<td>$result</td>";
+										if($i == $key['bulan']) $result = "fa fa-check-circle"; else $result = " ";
+										echo "<td align=\"center\"><i class=\"$result\"></i></td>";
 									}
 									?>
 								</tr>

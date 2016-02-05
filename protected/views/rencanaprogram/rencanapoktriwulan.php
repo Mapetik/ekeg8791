@@ -1,19 +1,19 @@
 <div class="row">
-	<div class="col-md-16">
+	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-16 f-panel-2">
+			<div class="col-md-12 f-panel-2">
 				<div class="f-panel-heading">
 					<h2>Jadwal POK Triwulan</h2>
 				</div>
-					<select class="col-md-3 btn f-button f-background-blue" id="tahun_anggaran">
+					<select class="col-md-2 btn f-button f-background-blue" id="tahun_anggaran">
 						<?php AlatUmum::activeOptListYears($tahun_anggaran) ?>
 					</select>
-					<button id="T1" class="col-md-3 btn f-button ">Triwulan 1</button>
-					<button id="T2" class="col-md-3 btn f-button ">Triwulan 2</button>
+					<button id="T1" class="col-md-2 btn f-button ">Triwulan 1</button>
+					<button id="T2" class="col-md-2 btn f-button ">Triwulan 2</button>
 					<button id="T3" class="col-md-3 btn f-button ">Triwulan 3</button>
 					<button id="T4" class="col-md-3 btn f-button ">Triwulan 4</button>
 			</div>
-			<div class="col-md-16">
+			<div class="col-md-12">
 				<div class="panel">
 					<div class="panel-body" id="triwulan">
 						<?php $this->renderPartial('_triwulan',array('dataKegiatan'=>$dataKegiatan,'max'=>$max,'min'=>$min)) ?>
@@ -28,6 +28,7 @@
 	$(document).ready(function(){
 		$('#T1').click(function(){
 			var tahun_anggaran = document.getElementById('tahun_anggaran').value;
+			// alert("tahyn yea");
 			$.ajax({
 				//LOAD URL 
 				type:'POST',

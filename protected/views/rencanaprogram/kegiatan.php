@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="col-md-16">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
+		<div class="box box-primary">
+			<div class="box-header">
 				Daftar Kegiatan & Rincian
 			</div>
-			<div class="panel-body">
+			<div class="box-body">
 				<!-- // Deskripsi Umum Halaman -->
 				<div class="row">
 					<div class="col-md-12">

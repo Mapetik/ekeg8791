@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="col-md-16">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
+		<div class="box box-primary">
+			<div class="box-header">
 				Daftar Layanan & Rincian
 			</div>
-			<div class="panel-body">
+			<div class="box-body">
 				<!-- // Deskripsi Umum Halaman -->
 					<div class="row">
 						<div class="col-md-12">
@@ -84,12 +84,6 @@
 				</table>
 			</div>
 
-			<!-- // Footer Halaman Daftar Program-->
-			<div class="panel-footer">
-				Jika anda hendak menambahkan Layanan lainnya, silakan klik tombol berikut <br> 
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahLayanan">Tambah Layanan</button>
-				<a href="<?php echo Yii::app()->request->baseUrl ?>/rencanaprogram/" class="btn">Ke Program</a>
-			</div>
 		</div>
 	</div>
 

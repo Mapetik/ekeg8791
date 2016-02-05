@@ -23,24 +23,28 @@
 	</div>
 	<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/UpdateLayanan/">
 	<div class="col-md-7">
-		<input type="hidden" name="id" value="<?php echo $dataLayanan['id'] ?>">
-		<input type="hidden" name="id_program" value="<?php echo $dataLayanan['id_program'] ?>">
-		<div class="form-group">
-			<label>Kode</label>
-			<input type="text" name="kodeLy" placeholder="Layanan" value="<?php echo $dataLayanan['id_program'] ?>" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>Nama Layanan</label>
-			<input type="text" name="namaLy" placeholder="Judul" class="form-control"  value="<?php echo $dataLayanan['nama_layanan'] ?>" required>
-		</div>
-		<div class="form-group">
-			<label>Nominal/Target Anggaran</label>
-			<input type="number" name="targetLy" placeholder="Nominal" class="form-control" value="<?php echo intval($dataLayanan['target']) ?>" max="<?php echo intval($dataLayanan['target']) ?>" required>
-			<dd>Maksimal : <?php echo AlatUmum::changeCurrency($dataLayanan['target']) ?></dd>
-		</div>
+		<div class="box box-danger">
+			<div class="box-body">
+				<input type="hidden" name="id" value="<?php echo $dataLayanan['id'] ?>">
+				<input type="hidden" name="id_program" value="<?php echo $dataLayanan['id_program'] ?>">
+				<div class="form-group">
+					<label>Kode</label>
+					<input type="text" name="kodeLy" placeholder="Layanan" value="<?php echo $dataLayanan['id_program'] ?>" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Nama Layanan</label>
+					<input type="text" name="namaLy" placeholder="Judul" class="form-control"  value="<?php echo $dataLayanan['nama_layanan'] ?>" required>
+				</div>
+				<div class="form-group">
+					<label>Nominal/Target Anggaran</label>
+					<input type="number" name="targetLy" placeholder="Nominal" class="form-control" value="<?php echo intval($dataLayanan['target']) ?>" max="<?php echo intval($dataLayanan['target']) ?>" required>
+					<dd>Maksimal : <?php echo AlatUmum::changeCurrency($dataLayanan['target']) ?></dd>
+				</div>
 
-	<a href="<?php echo Yii::app()->user->returnUrl ?>" class="btn">Kembali</a>
-    <input type="submit" class="btn btn-primary" value="Simpan">
+			<a href="<?php echo Yii::app()->user->returnUrl ?>" class="btn">Kembali</a>
+		    <input type="submit" class="btn btn-primary" value="Simpan">
+			</div>
+		</div>
 	</div>
 	</form>
 </div>

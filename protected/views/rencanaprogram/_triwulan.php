@@ -23,7 +23,7 @@
 	</tr>	
 
 	<?php }else{ ?>
-	<div class="col-md-16 alert alert-danger">
+	<div class="col-md-12 alert alert-danger">
 		Maaf Data Kosong pada Triwulan ini <b></b>
 	</div>
 	<?php } ?>

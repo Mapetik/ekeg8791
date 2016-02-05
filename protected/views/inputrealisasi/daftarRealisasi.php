@@ -5,7 +5,7 @@
 				<h4>Daftar Realisasi Tercatat</h4>
 			</div>
 			<div class="panel-body">
-				<div class="f-box  f-padding-1 alert alert-warning clearfix">
+				<div class="f-box  f-padding-1 alert clearfix">
 					<form class="form-inline" action="#" method="post">
 						<div class="form-group">
 							<select name="tahunAnggaran" class="form-control">
@@ -25,7 +25,7 @@
 								} ?>
 							</select>
 						</div>
-						<div class="form-group  pull-right">
+						<div class="form-group ">
 							<input type="submit" name="cariRealisasi" value="Tampilkan Daftar" class="btn btn-danger form-control" >
 						</div>
 					</form>

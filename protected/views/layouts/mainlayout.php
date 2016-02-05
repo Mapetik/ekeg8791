@@ -17,6 +17,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/dist/css/skins/skin-green.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/iCheck/flat/blue.css">
     <!-- Morris chart -->
@@ -29,7 +30,9 @@
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+    <!-- jQuery 2.1.4 -->
+    <script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,7 +40,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
@@ -367,7 +370,7 @@
                 <span>Rekap Pelaksanaan</span><i class="fa fa-angle-left pull-right"></i>
                 <!-- <span class="label label-primary pull-right">4</span> -->
                 <ul class="treeview-menu">
-                	<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rekapseluruh/openDat"><i class="fa fa-circle-o"></i> Rekap Bulanan</a></li>
+                	<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rekapseluruh/openData"><i class="fa fa-circle-o"></i> Rekap Bulanan</a></li>
 	                <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rekapbulanan"><i class="fa fa-circle-o"></i> Rekap Bulanan</a></li>
 	                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Rekap Triwulanan</a></li>
 	            	<li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Rekap Semesteran</a></li>
@@ -387,6 +390,16 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
+        <section class="alertbox">
+          <div class="container-fluid">
+            <!-- <div class="col-md-12">
+              <div class="callout callout-info">
+                <h4>Tip!</h4>
+                <p>Add the layout-top-nav class to the body tag to get this layout. This feature can also be used with a sidebar! So use this class if you want to remove the custom dropdown menus from the navbar and use regular links instead.</p>
+              </div>
+            </div> -->
+          </div>
+        </section>
         <section class="content-header">
           <h1>
             Dashboard
@@ -580,8 +593,6 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script  src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

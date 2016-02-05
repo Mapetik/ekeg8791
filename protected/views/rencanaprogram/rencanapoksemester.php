@@ -1,7 +1,7 @@
 <div class="row">
-	<div class="col-md-16">
+	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-16 f-panel-2">
+			<div class="col-md-12 f-panel-2">
 				<div class="f-panel-heading">
 					<h2>Jadwal POK Semester</h2>
 				</div>
@@ -12,9 +12,9 @@
 					<button id="S2" class="col-md-3 btn f-button ">Semester 2</button>
 					
 			</div>
-			<div class="col-md-16">
-				<div class="panel">
-					<div class="panel-body" id="semester">
+			<div class="col-md-12">
+				<div class="box box-success">
+					<div class="box-body" id="semester">
 						<?php $this->renderPartial('_semester',array('dataKegiatan'=>$dataKegiatan,'max'=>$max,'min'=>$min)) ?>
 					</div>
 				</div>

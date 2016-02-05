@@ -28,28 +28,35 @@
 	</div>
 	<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/UpdateProgram/">
 	<div class="col-md-7">
-			<div class="form-group">
-				<label>Kode</label>
-				<input type="text" name="kodeTP" value="<?php echo $dataProgram['kode_program'] ?>" class="form-control" >
+			<div class="box box-danger">
+				<div class="box-header">
+					
+				</div>
+				<div class="box-body">
+					<div class="form-group">
+						<label>Kode</label>
+						<input type="text" name="kodeTP" value="<?php echo $dataProgram['kode_program'] ?>" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Nama Program</label>
+						<input type="text" name="namaTP" placeholder="Judul" value="<?php echo $dataProgram['nama_program'] ?>" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Tahun Anggaran</label>
+						<select name="tahunTP" class="form-control">
+							<?php AlatUmum::activeOptListYears("2016") ?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Nominal/Target Anggaran</label>
+						<input type="number" name="targetTP" placeholder="Nominal" value="<?php echo intval($dataProgram['target']) ?>" class="form-control">
+					</div>
+					<p>Perhatikan data yang anda inputkan kembali</p>
+					<a href="<?php echo Yii::app()->user->returnUrl ?>" class="btn">Kembali</a>
+					<input type="hidden" name="id" value="<?php echo $dataProgram['id'] ?>">
+				    <input type="submit" class="btn btn-primary" value="Simpan">
+				</div>
 			</div>
-			<div class="form-group">
-				<label>Nama Program</label>
-				<input type="text" name="namaTP" placeholder="Judul" value="<?php echo $dataProgram['nama_program'] ?>" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>Tahun Anggaran</label>
-				<select name="tahunTP" class="form-control">
-					<?php AlatUmum::activeOptListYears("2016") ?>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Nominal/Target Anggaran</label>
-				<input type="number" name="targetTP" placeholder="Nominal" value="<?php echo intval($dataProgram['target']) ?>" class="form-control">
-			</div>
-			<p>Perhatikan data yang anda inputkan kembali</p>
-			<a href="<?php echo Yii::app()->user->returnUrl ?>" class="btn">Kembali</a>
-			<input type="hidden" name="id" value="<?php echo $dataProgram['id'] ?>">
-		    <input type="submit" class="btn btn-primary" value="Simpan">
 	</div>
 	</form>
 </div>

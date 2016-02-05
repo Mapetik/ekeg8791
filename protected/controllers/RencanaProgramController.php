@@ -464,6 +464,15 @@ class RencanaProgramController extends Controller
 			$tahun_anggaran = $_POST['tahun_anggaran'];
 		} else {$tahun_anggaran = date('Y');}
 
+		$dataSeluruh = "";
+		// Query Graphics
+		for($i=1;$i<13;$i++){
+			$dataSeluruh = $dataSeluruh.DatabaseUmum::getRealisasiOnMonth($i);
+			if($i+1!=13) {
+				$dataSeluruh = $dataSeluruh.",";
+			}
+		}
+
 
 		$sql = "SELECT kegiatan.id as id,
 				kegiatan.kode_kegiatan as kode_kegiatan,
@@ -484,7 +493,8 @@ class RencanaProgramController extends Controller
 		$command->bindParam(':tahun_anggaran',$_POST['tahun_anggaran'],PDO::PARAM_STR);
 		$dataKegiatan = $command->queryAll();
 		$this->render('lihatRencanaPOKBulananV2',array('dataKegiatan'=>$dataKegiatan,
-													'tahun_anggaran'=>$tahun_anggaran));
+													'tahun_anggaran'=>$tahun_anggaran,
+													'dataGrafikSeluruh'=>$dataSeluruh));
 	}
 
 	public function actionLihatPOKTriwulan($id=1){

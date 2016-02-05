@@ -8,12 +8,11 @@
 			<?php echo $value ?>
 		</div>
 		<?php endforeach ?>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
+		<div class="box box-success">
+			<div class="box-header">
 				POK -- PPS UNNES
 			</div>
-			<div class="panel-body">
-				<!-- // Deskripsi Umum Halaman -->
+			<div class="box-body">
 				<div class="row">
 					<div class="col-md-10">
 						<p>
@@ -24,7 +23,6 @@
 						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahProgram">Tambah Program</button>
 					</div>
 				</div>
-				<!-- // Tabel Informasi Umum Program -->
 				<table class="table table-bordered">
 					<tr>
 						<td>Jumlah Program</td>
@@ -48,13 +46,6 @@
 				<div id="tableProgram">
 					<?php $this->renderPartial('_program',array('dataProgram'=>$dataProgram)); ?>
 				</div>
-				
-			</div>
-
-			<!-- // Footer Halaman Daftar Program-->
-			<div class="panel-footer">
-				Jika anda hendak menambahkan program lainnya, silakan klik tombol berikut <br> 
-				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahProgram">Tambah Program</button>
 			</div>
 		</div>
 	</div>

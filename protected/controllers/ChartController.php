@@ -23,14 +23,10 @@ class ChartController extends Controller
 	}
 
 	public function actionHighChart(){
-		// $dataKegiatan = Kegiatan::model()->find('id=1');
-		// $dataLayanan = Layanan::model()->find('id=1');
 		$dataLayanan = "";
 		$dataKegiatan = "";
 		$dataProgram = $dataTargetProgram = $dataSeluruh = "";
 		for($i=1;$i<13;$i++){
-			// array_push($dataLayanan, array(date('M',mktime(0,0,0,$i+1,0,0)) => DatabaseUmum::getRealisasiOnMonthFromLayanan('1',$i)));
-			// $dataLayanan[date('M',mktime(0,0,0,$i+1,0,0))] = DatabaseUmum::getRealisasiOnMonthFromLayanan('1',$i);
 			$dataKegiatan = $dataKegiatan.DatabaseUmum::getRealisasi('1',$i);
 			$dataLayanan = $dataLayanan.DatabaseUmum::getRealisasiOnMonthFromLayanan('1',$i);
 			$dataProgram = $dataProgram.DatabaseUmum::getRealisasiOnMonthFromProgram('1',$i);
@@ -44,17 +40,6 @@ class ChartController extends Controller
 				$dataTargetProgram = $dataTargetProgram.",";
 			}
 		}
-		// print_r($dataProgram);
-		// echo DatabaseUmum::getRealisasiOnMonthFromLayanan('1','1');
-		//
-		// $bulan;
-		// $dataKegiatan = "";
-		// $i = 1;
-		// foreach ($dataKegiatan->realisasi as $key) {
-		// 	$dataKegiatan = $dataKegiatan.$key->nominal;
-		// 	if($i+1!=13) $dataLayanan = $dataLayanan.",";
-		// }
-		// $dataLayanan = "1,2,3,4,5,6,7,8,9,0,11,12";
 		$this->render('HighChart',array(
 										'data'=>$dataLayanan,
 										'layanan'=>'layanan ID 1',

@@ -1,3 +1,5 @@
+<!-- HIGHCHART -->
+<script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/highchart/highcharts.js"></script>
 <h1>Target</h1>
 <?php 
 $this->Widget('ext.highcharts.highcharts.HighchartsWidget', array(

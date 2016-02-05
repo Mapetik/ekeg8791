@@ -1,5 +1,5 @@
 <!-- // Tabel Daftar Program -->
-				<table class="table table-striped table-bordered table-hover">
+				<table class="table table-condensed table-bordered table-hover">
 					<tr>
 						<th>Kode</th>
 						<th width="300px">Nama Program</th>
@@ -57,4 +57,13 @@
 							</td>
 						</tr>
 					<?php endforeach ?>
+						<tr>
+							<th>Kode</th>
+							<th width="300px">Nama Program</th>
+							<th>Target</th>
+							<th>Realisasi</th>
+							<th>Layanan</th>
+							<th>Kegiatan</th>
+							<th>Aksi</th>
+						</tr>
 				</table>

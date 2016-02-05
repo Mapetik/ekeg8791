@@ -24,11 +24,11 @@
 		</div>
 		<?php endforeach ?>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
+		<div class="box box-primary">
+			<div class="box-header">
 				<h4>Input Data Realisasi</h4>
 			</div>
-			<div class="panel-body">
+			<div class="box-body">
 			<form method="post" action="<?php echo Yii::app()->request->baseUrl ?>/inputrealisasi/writerealisasi">
 				<table class="table">
 					<tr>
@@ -98,7 +98,7 @@
 				</table>
 			</form>
 			</div>
-			<div class="panel-footer">
+			<div class="box-footer">
 				
 			</div>
 		</div>
