@@ -31,7 +31,12 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <!-- jQuery 2.1.4 -->
-    <script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/jquery-2.1.4.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+   
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -331,8 +336,8 @@
                 <!-- <span class="label label-primary pull-right">4</span> -->
                 <ul class="treeview-menu">
 	                <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram"><i class="fa fa-circle-o"></i> Kelola Program</a></li>
-	                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Kelola Jadwal</a></li>
-	            	<li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Kelola Anggaran</a></li>
+	                <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/kelolajadwal"><i class="fa fa-circle-o"></i> Kelola Jadwal</a></li>
+	            	<li><a href="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/aturanggaran"><i class="fa fa-circle-o"></i> Kelola Anggaran</a></li>
 	            </ul>
               </a>
             </li>
@@ -593,12 +598,7 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery UI 1.11.4 -->
-    <script  src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-    </script>
+    
     <!-- Bootstrap 3.3.5 -->
     <script  src="<?php echo Yii::app()->request->baseUrl; ?>/assets/themes/adminlte/bootstrap/js/bootstrap.min.js"></script>
     <!-- Morris.js charts -->

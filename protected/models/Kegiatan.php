@@ -11,13 +11,14 @@
  * @property integer $target
  * @property integer $volume
  * @property integer $harga_satuan
- * @property string $satuan
- * @property string $sumber_dana
- * @property string $penanggung_jawab
+ * @property integer $satuan
+ * @property integer $sumber_dana
+ * @property integer $penanggung_jawab
  * @property integer $id_rekaman
  * @property string $versi
  * @property integer $status
  * @property integer $bulan
+ * @property string $tanggal
  * @property integer $recoverable
  */
 class Kegiatan extends CActiveRecord
@@ -48,15 +49,15 @@ class Kegiatan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('kode_kegiatan, id_layanan, nama_kegiatan, target, volume, harga_satuan, satuan, sumber_dana, penanggung_jawab, id_rekaman, versi', 'required'),
-			array('id_layanan, target, volume, harga_satuan, id_rekaman, status, bulan, recoverable', 'numerical', 'integerOnly'=>true),
+			array('kode_kegiatan, id_layanan, nama_kegiatan, target, volume, harga_satuan, satuan, sumber_dana, penanggung_jawab, id_rekaman, versi, tanggal', 'required'),
+			array('id_layanan, target, volume, harga_satuan, satuan, sumber_dana, penanggung_jawab, id_rekaman, status, bulan, recoverable', 'numerical', 'integerOnly'=>true),
 			array('kode_kegiatan', 'length', 'max'=>10),
 			array('nama_kegiatan', 'length', 'max'=>200),
-			array('satuan, sumber_dana, versi', 'length', 'max'=>20),
-			array('penanggung_jawab', 'length', 'max'=>70),
+			array('versi', 'length', 'max'=>20),
+			array('tanggal', 'length', 'max'=>12),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, kode_kegiatan, id_layanan, nama_kegiatan, target, volume, harga_satuan, satuan, sumber_dana, penanggung_jawab, id_rekaman, versi, status, bulan, recoverable', 'safe', 'on'=>'search'),
+			array('id, kode_kegiatan, id_layanan, nama_kegiatan, target, volume, harga_satuan, satuan, sumber_dana, penanggung_jawab, id_rekaman, versi, status, bulan, tanggal, recoverable', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,6 +97,7 @@ class Kegiatan extends CActiveRecord
 			'versi' => 'Versi',
 			'status' => 'Status',
 			'bulan' => 'Bulan',
+			'tanggal' => 'Tanggal',
 			'recoverable' => 'Recoverable',
 		);
 	}
@@ -118,13 +120,14 @@ class Kegiatan extends CActiveRecord
 		$criteria->compare('target',$this->target);
 		$criteria->compare('volume',$this->volume);
 		$criteria->compare('harga_satuan',$this->harga_satuan);
-		$criteria->compare('satuan',$this->satuan,true);
-		$criteria->compare('sumber_dana',$this->sumber_dana,true);
-		$criteria->compare('penanggung_jawab',$this->penanggung_jawab,true);
+		$criteria->compare('satuan',$this->satuan);
+		$criteria->compare('sumber_dana',$this->sumber_dana);
+		$criteria->compare('penanggung_jawab',$this->penanggung_jawab);
 		$criteria->compare('id_rekaman',$this->id_rekaman);
 		$criteria->compare('versi',$this->versi,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('bulan',$this->bulan);
+		$criteria->compare('tanggal',$this->tanggal,true);
 		$criteria->compare('recoverable',$this->recoverable);
 
 		return new CActiveDataProvider($this, array(

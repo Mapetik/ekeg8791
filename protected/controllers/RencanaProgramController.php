@@ -90,7 +90,6 @@ class RencanaProgramController extends Controller
 	public function actionInsertProgram(){
 		Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
 		if($_POST){
-//		$cek = DatabaseUmum::cekExist("program","nama_program",$_POST['namaTP']); 	// cek menggunakan component DatabaseUmum
 		$cek = DatabaseUmum::cekExist2('program','nama_program','tahun_anggaran',$_POST['namaTP'],$_POST['tahunTP']);
 			if($cek <= 0 ){
 				$program = new Program;
@@ -588,8 +587,6 @@ class RencanaProgramController extends Controller
 			$this->renderPartial('_triwulan',array('dataKegiatan'=>$dataKegiatan,
 													'max'=>$max,'min'=>$min));
 		} 
-
-		
 	}
 
 	public function actionLihatPOKSemester($id=1){
@@ -637,4 +634,199 @@ class RencanaProgramController extends Controller
 		}
 	}
 	
+	public function actionKelolaJadwal(){
+		$dataKegiatan = "";
+		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));
+		
+		if(Yii::app()->request->isAjaxRequest){
+			$dataKegiatan = Kegiatan::model()->findAll("id_layanan=:id AND status = 1",array(':id'=>$_POST['id_layanan']));
+			$this->renderPartial('_kelolaJadwal',array('dataKegiatan'=>$dataKegiatan));
+		} else {
+			$this->render('KelolaJadwal',array('dataKegiatan'=>$dataKegiatan,
+											'dataProgram'=>$dataProgram));
+		}
+	}
+
+	public function actionSearchByCode(){
+		if(Yii::app()->request->isAjaxRequest){
+			$dataKegiatan = Kegiatan::model()->findAll("nama_kegiatan LIKE :nama_kegiatan AND status = 1",array(':nama_kegiatan'=>'%'.$_POST['nama_kegiatan'].'%'));
+			$this->renderPartial('_kelolaJadwal',array('dataKegiatan'=>$dataKegiatan));
+		} else {
+			$this->redirect(array('/errPage/errDB'));
+		}
+	}
+
+	public function actionGetModalKegiatan(){
+		$dataKegiatan = Kegiatan::model()->find('id=:id',array(':id'=>$_POST['id_kegiatan']));
+		$this->renderPartial('_modalKegiatan',array('dataKegiatan'=>$dataKegiatan),false,false);
+	}
+
+	public function actionSimpanJadwal(){
+		// echo date('m',strtotime($_POST['tanggal']));
+		$kegiatan = Kegiatan::model()->find('id=:id',array(':id'=>$_POST['id_kegiatan']));
+		$backup = $this->updateTheKegiatan($kegiatan);
+		
+		$sql = "UPDATE kegiatan SET bulan=:bulan, tanggal=:tanggal WHERE id=:id";
+		$conn = Yii::app()->db;
+		$cmd = $conn->createCommand($sql);
+		$cmd->bindParam(':tanggal',$_POST['tanggal'],PDO::PARAM_STR);
+		$cmd->bindParam(':bulan',date('m',strtotime($_POST['tanggal'])),PDO::PARAM_STR);
+		$cmd->bindParam(':id',$_POST['id_kegiatan'],PDO::PARAM_STR);
+		
+		if($backup == 1 && $cmd->execute()){
+			Yii::app()->user->setFlash("success","Operasi Update Berhasil !");
+			$this->redirect(Yii::app()->request->urlReferrer);
+		} else {
+			Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
+			$this->redirect(array('/errPage/errDB'));
+		} 
+	}
+
+	public function actionGetProgram(){
+		if(Yii::app()->request->isAjaxRequest){
+			if($_POST){
+				AlatUmum::setCookieTahun($_POST['tahun_anggaran']);
+				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND status = 1',array(':tahun_anggaran'=>$_POST['tahun_anggaran']));
+				$this->renderPartial('_formprogram',array('dataProgram'=>$dataProgram));
+			}
+		}
+	}
+
+	public function actionGetLayanan(){
+		if(Yii::app()->request->isAjaxRequest){
+			if($_POST){
+				$dataLayanan = Layanan::model()->findAll('id_program=:id AND status = 1',array(':id'=>$_POST['id_program']));
+				$this->renderPartial('_formlayanan',array('dataLayanan'=>$dataLayanan));
+			}
+		}
+	}
+
+
+	public function actionAturAnggaran(){
+		// $dataKegiatan = "";
+		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND status = 1',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));
+		
+		if(Yii::app()->request->isAjaxRequest && isset($_POST['tahun_anggaran'])){
+			AlatUmum::setCookieTahun($_POST['tahun_anggaran']);
+			if(isset($_POST['nama_program'])) {
+				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND nama_program LIKE :nama_program AND status = 1',
+					array(':tahun_anggaran' => AlatUmum::getCookieTahun(),
+						':nama_program'=>'%'.$_POST['nama_program'].'%'));
+			}
+				else 
+			$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND status = 1',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));
+			$this->renderPartial('_aturAnggaran-program',array('dataProgram'=>$dataProgram));
+		} else {
+			$this->render('AturAnggaran',array('dataProgram'=>$dataProgram));
+		}
+	}
+
+	public function actionGetModalAnggaranProgram(){
+		$dataProgram = Program::model()->find('id=:id',array(':id'=>$_POST['id_program']));
+		$this->renderPartial('modal_atur_anggaran/_program',array('dataProgram'=>$dataProgram));
+	}
+
+	public function actionAturAnggaranLayanan($id){
+		$dataLayanan = Layanan::model()->findAll('id_program=:id_program AND status = 1',array('id_program'=>$id));
+		
+		if(Yii::app()->request->isAjaxRequest && isset($_POST['nama_layanan'])){
+			if(isset($_POST['nama_layanan'])) {
+				$dataLayanan = Layanan::model()->findAll('nama_layanan LIKE :nama_layanan AND id_program =:id_program AND status = 1',
+					array(':nama_layanan'=>'%'.$_POST['nama_layanan'].'%',
+							':id_program'=>$id));
+			}
+			$this->renderPartial('_aturAnggaran-layanan',array('dataLayanan'=>$dataLayanan));
+		} else {
+			$this->render('AturAnggaranLayanan',array('dataLayanan'=>$dataLayanan,'id_program'=>$id));
+		}
+	}
+
+	public function actionGetModalAnggaranLayanan(){
+		$dataLayanan = Layanan::model()->find('id=:id',array(':id'=>$_POST['id_layanan']));
+		$this->renderPartial('modal_atur_anggaran/_layanan',array('dataLayanan'=>$dataLayanan));
+	}
+
+	public function actionAturAnggaranKegiatan($id){
+
+		$dataKegiatan = Kegiatan::model()->findAll('id_layanan=:id_layanan AND status = 1',array('id_layanan'=>$id));
+		
+		if(Yii::app()->request->isAjaxRequest && isset($_POST['nama_kegiatan'])){
+			if(isset($_POST['nama_kegiatan'])) {
+				$dataKegiatan = Kegiatan::model()->findAll('nama_kegiatan LIKE :nama_kegiatan AND id_layanan =:id_layanan AND status = 1',
+					array(':nama_kegiatan'=>'%'.$_POST['nama_kegiatan'].'%',
+							':id_layanan'=>$id));
+			}
+			$this->renderPartial('_aturAnggaran-kegiatan',array('dataKegiatan'=>$dataKegiatan));
+		} else {
+			$dataLayanan = Layanan::model()->find('id=:id',array(':id'=>$id));
+			$this->render('AturAnggaranKegiatan',array('dataKegiatan'=>$dataKegiatan,
+														'id_layanan'=>$id,
+														'id_program'=>$dataLayanan->id_program));
+		}
+	}
+
+	public function actionGetModalAnggaranKegiatan(){
+		$dataSatuan = Satuan::model()->findAll('status=:status',array(":status"=>1));
+		$dataSumberDana = SumberDana::model()->findAll('status=:status',array(":status"=>1));
+		$dataPenanggungJawab = PenanggungJawab::model()->findAll('status=:status',array(":status"=>1));
+		
+		$dataKegiatan = Kegiatan::model()->find('id=:id',array(':id'=>$_POST['id_kegiatan']));
+		$this->renderPartial('modal_atur_anggaran/_kegiatan',array('dataKegiatan'=>$dataKegiatan,
+																	'dataSatuan'=>$dataSatuan,
+																	'dataSumberDana'=>$dataSumberDana,
+																	'dataPenanggungJawab'=>$dataPenanggungJawab));
+	}
+
+	public function actionUbahAnggaran($id){
+		$sql = "";
+		switch ($id) {
+			case '1':
+				$sql = "UPDATE program SET target = :target WHERE id=:id";
+				$program = Program::model()->find('id=:id',array(':id'=>$_POST['id_program']));
+				$backup = $this->updateTheProgram($program);
+				$conn = Yii::app()->db;
+				$cmd = $conn->createCommand($sql);
+				$cmd->bindParam(':target',$_POST['nominal'],PDO::PARAM_STR);
+				$cmd->bindParam(':id',$_POST['id_program'],PDO::PARAM_STR);
+				break;
+			case '2':
+				$sql = "UPDATE layanan SET target = :target WHERE id=:id";
+				$layanan = Layanan::model()->find('id=:id',array(':id'=>$_POST['id_layanan']));
+				$backup = $this->updateTheLayanan($layanan);
+				$conn = Yii::app()->db;
+				$cmd = $conn->createCommand($sql);
+				$cmd->bindParam(':target',$_POST['nominal'],PDO::PARAM_STR);
+				$cmd->bindParam(':id',$_POST['id_layanan'],PDO::PARAM_STR);
+				break;
+			case '3':
+				$sql = "UPDATE 
+				kegiatan 
+				SET 
+				target = :target, 
+				harga_satuan = :harga_satuan,
+				volume = :volume,
+				sumber_dana = :sumber_dana,
+				penanggung_jawab = :penanggung_jawab
+				WHERE id=:id";
+				$kegiatan = Kegiatan::model()->find('id=:id',array(':id'=>$_POST['id_kegiatan']));
+				$backup = $this->updateTheKegiatan($kegiatan);
+				$conn = Yii::app()->db;
+				$cmd = $conn->createCommand($sql);
+				$cmd->bindParam(':target',$_POST['nominal'],PDO::PARAM_STR);
+				$cmd->bindParam(':harga_satuan',$_POST['harga_satuan'],PDO::PARAM_STR);
+				$cmd->bindParam(':id',$_POST['id_kegiatan'],PDO::PARAM_STR);
+				$cmd->bindParam(':volume',$_POST['volume'],PDO::PARAM_STR);
+				$cmd->bindParam(':sumber_dana',$_POST['sumber_dana'],PDO::PARAM_STR);
+				$cmd->bindParam(':penanggung_jawab',$_POST['penanggung_jawab'],PDO::PARAM_STR);
+				break;
+		}
+		if($backup == 1 && $cmd->execute()){
+			Yii::app()->user->setFlash("success","Operasi Update Berhasil !");
+			$this->redirect(Yii::app()->request->urlReferrer);
+		} else {
+			Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
+			$this->redirect(array('/errPage/errDB'));
+		}
+	}
+
 }
