@@ -1,5 +1,33 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-3">
+		<div class="box box-primary">
+	        <div class="box-header with-border">
+	          <h5 class="box-title">Kelola POK - Program</h5>
+	          <div class="box-tools pull-right">
+	            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	          </div><!-- /.box-tools -->
+	        </div><!-- /.box-header -->
+	        <div class="box-body">
+	        	<p>
+					Tabel berikut menyajikan daftar program yang telah tercatat dalam database 
+					lengkap dengan rinciannya. <br> <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz
+				</p>
+          		<div class="input-group input-group-sm">
+                	<input type="text" class="form-control" placeholder="Nama Program" id="nama_program">
+                    <span class="input-group-btn">
+                      <button class="btn btn-info btn-flat" type="button" id="btn_cari_nama">Cari Nama</button>
+                    </span>
+                </div><!-- /input-group -->
+	          	<hr>
+                <div class="form-group">
+                	<label class="control-label">Aksi Khusus</label><br>
+                	<br>
+                	<button type="button" class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modalTambahProgram">Tambah Program</button>
+                </div>
+	    	</div><!-- /.box-body -->
+	    </div><!-- /.box -->
+	</div>
+	<div class="col-md-9">
 		<!-- Error Message -->
 		<?php foreach (Yii::app()->user->getFlashes() as $key => $value): ?>
 		<div class="alert alert-success">
@@ -9,33 +37,18 @@
 		</div>
 		<?php endforeach ?>
 		<div class="box box-success">
-			<div class="box-header">
-				POK -- PPS UNNES
-			</div>
 			<div class="box-body">
-				<div class="row">
-					<div class="col-md-10">
-						<p>
-						Tabel berikut menyajikan daftar program yang telah tercatat dalam database lengkap dengan rinciannya. <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz
-						</p>
-					</div>
-					<div class="col-md-2">
-						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahProgram">Tambah Program</button>
-					</div>
-				</div>
 				<table class="table table-bordered">
 					<tr>
-						<td>Jumlah Program</td>
-						<td>Jumlah Layanan</td>
-						<td>Jumlah Kegiatan</td>
-						<td>Persentase Realisasi</td>
-						<td>Tahun Anggaran</td>
+						<th>Jumlah Program</th>
+						<th>Jumlah Layanan</th>
+						<th>Jumlah Kegiatan</th>
+						<th>Tahun Anggaran</th>
 					</tr>
 					<tr>
 						<td><?php echo count($dataProgram) ?></td>
 						<td><?php echo count(Layanan::model()->findAll()) ?></td>
 						<td><?php echo count(Kegiatan::model()->findAll()) ?></td>
-						<td><?php echo DatabaseUmum::getPersentaseRealisasi("all","1") ?> (<a href="#">halaman rekap</a>)</td>
 						<td>
 							<select class="form-control" id="tahun_anggaran">
 								<?php AlatUmum::activeOptListYears(Yii::app()->request->cookies['tahun_anggaran']->value) ?>
@@ -43,6 +56,7 @@
 						</td>
 					</tr>
 				</table>
+				<br>
 				<div id="tableProgram">
 					<?php $this->renderPartial('_program',array('dataProgram'=>$dataProgram)); ?>
 				</div>
@@ -74,10 +88,6 @@
 							<?php AlatUmum::optListYears() ?>
 						</select>
 					</div>
-					<div class="form-group">
-						<label>Nominal/Target Anggaran</label>
-						<input type="number" name="targetTP" placeholder="Nominal" class="form-control">
-					</div>
 				</div>
 				<div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -106,6 +116,27 @@
 					alert('gagal');
 				}
 			})
+		})
+		$('#btn_cari_nama').click(function(){
+			// alert('check');
+			var tahun_anggaran = document.getElementById('tahun_anggaran').value;
+			var nama_program = document.getElementById('nama_program').value;
+			// alert(nama_program);
+			if(nama_program != ""){
+				$.ajax({
+				type:'POST',
+				data:{tahun_anggaran:tahun_anggaran,
+					   nama_program:nama_program},
+				//LOAD URL 
+				url:'<?php echo Yii::app()->request->baseUrl;?>/rencanaprogram/ProgramPartial/',
+				success:function(msg){
+					$('#tableProgram').html(msg);
+				},
+				error:function(msg){
+					alert('gagal');
+				}
+			})
+			} else alert('no please fill them');
 		})
 	})
 </script>

@@ -30,10 +30,15 @@ return array(
 		),
 		
 	),
-
-	// application components
-	'components'=>array(
+// application components
+	/*'components'=>array(
 		'user'=>array(
+			// enable cookie-based authentication
+			'allowAutoLogin'=>true,
+		),*/
+
+	'components'=>array(
+        'user'=>array(
             // There you go, use our 'extended' version
             'class'=>'application.components.EWebUser',
             // enable cookie-based authentication
@@ -77,11 +82,11 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				
-				// array(
-				// 	'class'=>'CWebLogRoute',
-				// ),
-				
+				/*
+				array(
+					'class'=>'CWebLogRoute',
+				),
+				*/
 			),
 		),
 	),

@@ -131,6 +131,9 @@
 				url:'<?php echo Yii::app()->request->baseUrl;?>/inputrealisasi/getLayanan/',
 				success:function(msg){
 					$('#layanan').html(msg);
+				},
+				error:function(msg){
+					alert('your action failed');
 				}
 			})
 		})
@@ -143,12 +146,14 @@
 				url:'<?php echo Yii::app()->request->baseUrl;?>/inputrealisasi/getKegiatan/',
 				success:function(msg){
 					$('#kegiatan').html(msg);
+				},
+				error:function(msg){
+					alert('your action failed');
 				}
 			})
 		})
 		$('#kegiatan').change(function(){
 			var idkegiatan = document.getElementById('kegiatan').value;
-			
 			$.ajax({
 				type:'POST',
 				data:{id_kegiatan:idkegiatan},

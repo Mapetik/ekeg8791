@@ -1,45 +1,64 @@
 <div class="row">
-	<div class="col-md-16">
+	<div class="col-md-3">
 		<div class="box box-primary">
-			<div class="box-header">
-				Daftar Layanan & Rincian
-			</div>
+	        <div class="box-header with-border">
+	          <h5 class="box-title">Kelola POK - Program</h5>
+	          <div class="box-tools pull-right">
+	            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	          </div><!-- /.box-tools -->
+	        </div><!-- /.box-header -->
+	        <div class="box-body">
+	        	<p>
+					Tabel berikut menyajikan daftar Layanan yang telah tercatat dalam database 
+					lengkap dengan rinciannya. <br> <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz
+				</p>
+          		<form action="<?php echo Yii::app()->request->baseUrl;?>/rencanaProgram/layanan/<?php echo $id_program ?>" method="post">
+          			<div class="input-group input-group-sm">
+	                	<input type="text" class="form-control" placeholder="Nama Layanan" name="nama_layanan">
+	                    <span class="input-group-btn">
+	                    	<input type="hidden" name="id_program" value="<?php echo $id_program ?>">
+	                      	<button class="btn btn-info btn-flat" type="submit" id="btn_cari_nama">Cari Nama</button>
+	                    </span>
+	                </div><!-- /input-group -->
+          		</form>
+	          	<hr>
+                <div class="form-group">
+                	<label class="control-label">Aksi Khusus</label><br>
+                	<br>
+                	<button type="button" class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modalTambahLayanan">Tambah Layanan</button>
+                	<br>
+                	<div class="btn-group">
+                		<a href="<?php echo Yii::app()->request->baseUrl;?>/rencanaProgram/" class="btn bg-olive">Kembali Ke Program</a>
+                	</div>
+                </div>
+	    	</div><!-- /.box-body -->
+	    </div><!-- /.box -->
+	</div>
+	<div class="col-md-9">
+		<div class="box box-primary">
+
 			<div class="box-body">
-				<!-- // Deskripsi Umum Halaman -->
-					<div class="row">
-						<div class="col-md-12">
-							Tabel berikut menyajikan daftar Layanan yang telah tercatat dalam database lengkap dengan rinciannya. <br> Terakhir ditambah : 08-11-2015 oleh Alfian Faiz		
-						</div>
-						<div class="col-md-4">
-							<a href="<?php echo Yii::app()->request->baseUrl ?>/rencanaprogram/" class="btn">Ke Program</a>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalTambahLayanan">Tambah Layanan</button>
-						</div>
-					</div>
 					
 				<!-- // Tabel Informasi Umum Program -->
 				<table class="table table-bordered">
 					<tr>
-						<td>Nama Program</td>
-						<td>Jumlah Kegiatan</td>
-						<td>Persentase Realisasi</td>
-						<td>Tahun Anggaran</td>
+						<th>Nama Program</th>
+						<th>Jumlah Kegiatan</th>
+						<th>Tahun Anggaran</th>
 					</tr>
 					<tr>
 						<td><?php echo $nama_program ?></td>
 						<td>10</td>
-						<td><?php echo DatabaseUmum::getPersentaseRealisasi('layanan',$id_program) ?> (<a href="#">halaman rekap</a>)</td>
 						<td>2015</td>
 					</tr>
 				</table>
-
+				<br>
 				<!-- // Tabel Daftar Program -->
 				<table class="table table-striped table-bordered">
 					<tr>
 						<th>No</th>
 						<th>Kode</th>
 						<th>Nama Layanan</th>
-						<th>Target</th>
-						<th>Realisasi</th>
 						<th>Kegiatan</th>
 						<th>Aksi</th>
 					</tr>
@@ -50,11 +69,6 @@
 							<td><?php echo $i ?></td>
 							<td><?php echo $key->kode_layanan ?></td>
 							<td><?php echo $key->nama_layanan ?></td>
-							<td><?php echo AlatUmum::changeCurrency($key->target) ?></td>
-							<td><?php
-									$realisasi = $this->getRealisasiFromLayanan($key->id);
-									echo AlatUmum::changeCurrency($realisasi);
-							 	?> (<?php if($realisasi!=0){echo AlatUmum::formatDecimal($realisasi/$key->target * 100);} else echo "0"; ?>%)</td>
 							<td><?php echo count($key->kegiatan) ?></td>
 							<td> 
 								<table>
@@ -86,15 +100,14 @@
 
 		</div>
 	</div>
-
 	<!-- Modal Tambah Layanan -->
-	<div class="modal fade" id="modalTambahLayanan" tabindex="-1" role="dialog" aria-labelledby="labelModalLy">
+	<div class="modal fade" id="modalTambahLayanan" tabindex="-1" role="dialog" aria-labelledby="labelModalTP">
 		<div class="modal-dialog" role="document">
-			<form method="post" action="<?php echo Yii::app()->request->baseUrl;?>/rencanaprogram/insertlayanan/">
-			<div class="model-content f-modal-wrap modal-sm">
+			<form method="post" action="<?php echo Yii::app()->request->baseUrl; ?>/rencanaprogram/insertLayanan">
+			<div class="modal-content f-modal-wrap modal-sm">
 				<div class="modal-haeder">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="labelModalLy"><center>Tambah Layanan</center></h4>
+					<h4 class="modal-title" id="labelModalTP"><center>Tambah Layanan</center></h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
@@ -104,11 +117,6 @@
 					<div class="form-group">
 						<label>Nama Layanan</label>
 						<input type="text" name="namaLy" placeholder="Judul" class="form-control">
-					</div>
-					<div class="form-group">
-						<label>Nominal/Target Anggaran</label>
-						<input type="number" name="targetLy" placeholder="Nominal" class="form-control" max="<?php echo $dataMaxTarget ?>" required>
-						<dd>Maksimal : Rp <?php echo AlatUmum::changeCurrency($dataMaxTarget)?></dd>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -121,5 +129,4 @@
 		</div>
 	</div>
 	<!-- END Modal Tambah Layanan -->
-
 </div>

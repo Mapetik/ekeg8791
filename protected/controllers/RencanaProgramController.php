@@ -10,7 +10,6 @@ class RencanaProgramController extends Controller
 	{
 		// "status=:status",array(':status'=>"1")
 		$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));
-
 		if(isset($_GET['tahun_anggaran'])){
 			AlatUmum::setCookieTahun($_GET['tahun_anggaran']);
 			$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran' => AlatUmum::getCookieTahun()));			
@@ -28,9 +27,17 @@ class RencanaProgramController extends Controller
 			if(isset($_POST['tahun_anggaran'])){
 				AlatUmum::setCookieTahun($_POST['tahun_anggaran']);
 				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran',array(':tahun_anggaran'=>$_POST['tahun_anggaran']));
+				if(isset($_POST['nama_program'])){
+					$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND nama_program LIKE :nama_program',
+						array(':tahun_anggaran'=>$_POST['tahun_anggaran'],
+								':nama_program'=>'%'.$_POST['nama_program'].'%'));	
+				}
 				$this->renderPartial('_program',array("dataProgram"=>$dataProgram));
+				// echo "Yeah2";
 			}
+
 		}
+
 	}
 
 	public static function getRealisasiFromProgram($id){
@@ -54,9 +61,16 @@ class RencanaProgramController extends Controller
 	{
 		Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
 		$dataLayanan = Layanan::model()->findAll("id_program=:id",array(':id'=>$id));
+		if (isset($_POST['nama_layanan'])) {
+			$dataLayanan = Layanan::model()->findAll("id_program=:id AND nama_layanan LIKE :nama_layanan",array(':id'=>$id,':nama_layanan'=>'%'.$_POST['nama_layanan'].'%'));
+		}
 		$dataMaxTarget = Program::model()->find('id=:id',array(':id'=>$id));
 		$dataProgram = Program::model()->find('id=:id',array(':id'=>$id));
-		$this->render("layanan",array("id"=>$id,"dataLayanan"=>$dataLayanan,"dataMaxTarget"=>$dataMaxTarget['target'],'nama_program'=>$dataProgram['nama_program'],'id_program'=>$dataProgram['id']));
+		$this->render("layanan",array("id"=>$id,
+			"dataLayanan"=>$dataLayanan,
+		"dataMaxTarget"=>$dataMaxTarget['target'],
+		'nama_program'=>$dataProgram['nama_program'],
+		'id_program'=>$dataProgram['id']));
 	}
 
 	public function actionLayananPartial(){
@@ -72,6 +86,9 @@ class RencanaProgramController extends Controller
 	{
 		Yii::app()->user->returnUrl = Yii::app()->request->urlReferrer;
 		$dataKegiatan = Kegiatan::model()->findAll("id_layanan=:id",array(':id'=>$id));
+		if (isset($_POST['nama_kegiatan'])) {
+			$dataKegiatan = Kegiatan::model()->findAll("id_layanan=:id AND nama_kegiatan LIKE :nama_kegiatan",array(':id'=>$id,'nama_kegiatan'=>'%'.$_POST['nama_kegiatan'].'%'));
+		}
 		$dataMaxTarget = Layanan::model()->find('id=:id',array(':id'=>$id));
 		$dataLayanan = Layanan::model()->findAll('id=:id',array(':id'=>$id));
 		$dataSatuan = Satuan::model()->findAll('status=:status',array(":status"=>1));
@@ -96,7 +113,7 @@ class RencanaProgramController extends Controller
 
 				$program->nama_program = $_POST['namaTP'];
 				$program->kode_program = $_POST['kodeTP'];
-				$program->target = $_POST['targetTP'];
+				$program->target = "0";
 				$program->tahun_anggaran = $_POST['tahunTP'];
 				$program->id_rekaman = 0;
 				
@@ -126,7 +143,7 @@ class RencanaProgramController extends Controller
 				$layanan->nama_layanan = $_POST['namaLy'];
 				$layanan->kode_layanan = $_POST['kodeLy'];
 				$layanan->id_program = $_POST['id_program'];
-				$layanan->target = $_POST['targetLy'];
+				$layanan->target = 0;
 				$layanan->id_rekaman = 0;
 				$layanan->versi = 0;
 				
@@ -152,19 +169,20 @@ class RencanaProgramController extends Controller
 			if($cek <= 0 ){
 				$kegiatan = new Kegiatan;
 
-				$kegiatan->nama_kegiatan = $_POST['namaKg'];
-				$kegiatan->kode_kegiatan = $_POST['kodeKg'];
-				$kegiatan->id_layanan = $_POST['id_layanan'];
-				$kegiatan->target = $_POST['targetKg'];
-				$kegiatan->bulan = $_POST['bulanKg'];
-				$kegiatan->volume = $_POST['volumeKg'];
-				$kegiatan->harga_satuan = $_POST['harga_satuanKg'];
-				$kegiatan->satuan = $_POST['satuanKg'];
-				$kegiatan->sumber_dana = $_POST['sumber_danaKg'];
-				$kegiatan->penanggung_jawab = $_POST['penanggung_jawabKg'];
+				echo $kegiatan->nama_kegiatan = $_POST['namaKg'];
+				echo $kegiatan->kode_kegiatan = $_POST['kodeKg'];
+				echo $kegiatan->id_layanan = $_POST['id_layanan'];
+				$kegiatan->target = 0;
+				$kegiatan->bulan = 0;
+				$kegiatan->tanggal = 0;
+				$kegiatan->volume = 0;
+				$kegiatan->harga_satuan = 0;
+				$kegiatan->satuan = 0;
+				$kegiatan->sumber_dana = 0;
+				$kegiatan->penanggung_jawab = 0;
 				$kegiatan->id_rekaman = 0;
 				$kegiatan->versi = 0;
-				$kegiatan->status = 0;
+				$kegiatan->status = 1;
 				
 				if($kegiatan->validate()){
 					$kegiatan->save();
@@ -172,7 +190,7 @@ class RencanaProgramController extends Controller
 				} else {
 					Yii::app()->user->setFlash('error','Maaf, simpan Program gagal. Mohon periksa kembali data yang anda inputkan');
 					$this->redirect(array('/errPage/errDB'));
-				}
+				 }
 			} else {
 				Yii::app()->user->setFlash('error','Maaf, simpan Program gagal. Data sudah ada');
 				$this->redirect(array('/errPage/errDB'));
@@ -747,7 +765,6 @@ class RencanaProgramController extends Controller
 	}
 
 	public function actionAturAnggaranKegiatan($id){
-
 		$dataKegiatan = Kegiatan::model()->findAll('id_layanan=:id_layanan AND status = 1',array('id_layanan'=>$id));
 		
 		if(Yii::app()->request->isAjaxRequest && isset($_POST['nama_kegiatan'])){

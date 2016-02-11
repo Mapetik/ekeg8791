@@ -52,8 +52,8 @@ class InputRealisasiController extends Controller
 
 	public function actionGetProgram(){
 		if(Yii::app()->request->isAjaxRequest){
-			if($_POST){
-				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND status = 0',array(':tahun_anggaran'=>$_POST['tahun_anggaran']));
+			if($_POST['tahun_anggaran']){
+				$dataProgram = Program::model()->findAll('tahun_anggaran=:tahun_anggaran AND status = 1',array(':tahun_anggaran'=>$_POST['tahun_anggaran']));
 				$this->renderPartial('_program',array('dataProgram'=>$dataProgram));
 			}
 		}
@@ -62,7 +62,7 @@ class InputRealisasiController extends Controller
 	public function actionGetLayanan(){
 		if(Yii::app()->request->isAjaxRequest){
 			if($_POST){
-				$dataLayanan = Layanan::model()->findAll('id_program=:id AND status = 0',array(':id'=>$_POST['id_program']));
+				$dataLayanan = Layanan::model()->findAll('id_program=:id AND status = 1',array(':id'=>$_POST['id_program']));
 				$this->renderPartial('_layanan',array('dataLayanan'=>$dataLayanan));
 			}
 		}
@@ -71,7 +71,7 @@ class InputRealisasiController extends Controller
 	public function actionGetKegiatan(){
 		if(Yii::app()->request->isAjaxRequest){
 			if($_POST){
-				$dataKegiatan = Kegiatan::model()->findAll('id_layanan=:id AND status = 0',array(':id'=>$_POST['id_layanan']));
+				$dataKegiatan = Kegiatan::model()->findAll('id_layanan=:id AND status = 1',array(':id'=>$_POST['id_layanan']));
 				$this->renderPartial('_kegiatan',array('dataKegiatan'=>$dataKegiatan));
 			}
 		}

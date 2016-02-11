@@ -3,15 +3,13 @@
 					<tr>
 						<th>Kode</th>
 						<th width="300px">Nama Program</th>
-						<th>Target</th>
-						<th>Realisasi</th>
 						<th>Layanan</th>
 						<th>Kegiatan</th>
 						<th>Aksi</th>
 					</tr>
 					<?php if (empty($dataProgram)): ?>
 						<tr>
-							<td colspan="8"><div class="alert alert-warning"><center>Data Kosong untuk tahun anggaran tersebut, Silakan pilih tanggal lain</center></div></td>
+							<td colspan="8"><div class="alert alert-warning"><center>Data Kosong untuk tahun anggaran tersebut, Silakan pilih tanggal/keyword lain</center></div></td>
 						</tr>
 					<?php endif ?>
 					<?php $i=0;$counterKegiatan =0 ?>
@@ -20,10 +18,6 @@
 						<tr>
 							<td><?php echo $key->kode_program ?></td>
 							<td><?php echo $key->nama_program ?></td>
-							<td><?php echo AlatUmum::changeCurrency($key->target) ?></td>
-							<td><?php
-									echo $realisasi = $this->getRealisasiFromProgram($key->id)
-							 	?> (<?php if($realisasi!=0){echo AlatUmum::formatDecimal($realisasi/$key->target * 100);} else echo "0"; ?>%)</td>
 							<td><?php echo count($key->layanan) ?></td>
 							<td>
 								<?php foreach ($key->layanan as $key2) {
@@ -60,8 +54,6 @@
 						<tr>
 							<th>Kode</th>
 							<th width="300px">Nama Program</th>
-							<th>Target</th>
-							<th>Realisasi</th>
 							<th>Layanan</th>
 							<th>Kegiatan</th>
 							<th>Aksi</th>
